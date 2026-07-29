@@ -58,6 +58,7 @@ add_library(crengine STATIC
     ${CRE_DIR}/src/lvstring.cpp
     ${CRE_DIR}/src/lvstsheet.cpp
     ${CRE_DIR}/src/lvstyles.cpp
+    ${CRE_DIR}/src/lvkplinebreak.cpp
     ${CRE_DIR}/src/lvtextfm.cpp
     ${CRE_DIR}/src/lvtinydom.cpp
     ${CRE_DIR}/src/lvxml.cpp
