@@ -6,6 +6,12 @@ include(koreader_thirdparty_libs)
 
 set(CRE_3RDPARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/crengine/thirdparty)
 set(CRE_DIR crengine/crengine)
+set(BUILD_SHARED_LIBS OFF)
+
+# The embedded build does not create upstream's optional lint targets.
+function(add_lint_targets)
+endfunction()
+
 
 include(CheckTypeSize)
 
@@ -20,6 +26,7 @@ endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(_DEBUG 1)
+    add_compile_definitions(_DEBUG=1 DEBUG=1)
 endif()
 
 add_subdirectory(${CRE_3RDPARTY_DIR}/chmlib)
@@ -66,6 +73,7 @@ add_library(crengine STATIC
     ${CRE_DIR}/src/txtselector.cpp
     ${CRE_DIR}/src/wordfmt.cpp
 )
+target_link_libraries(crengine PRIVATE antiword chmlib)
 # Make sure we get full `constexpr` support.
 target_compile_features(crengine PRIVATE cxx_std_17)
 target_compile_options(crengine PRIVATE -ftabstop=4 -Wall)
@@ -75,6 +83,7 @@ set_target_properties(crengine PROPERTIES CXX_VISIBILITY_PRESET hidden)
 set_target_properties(crengine PROPERTIES VISIBILITY_INLINES_HIDDEN TRUE)
 target_include_directories(crengine PUBLIC ${CRE_DIR}/include)
 target_include_directories(crengine PRIVATE
+    ${CMAKE_CURRENT_BINARY_DIR}
     ${CRE_3RDPARTY_DIR}/antiword
     ${CRE_3RDPARTY_DIR}/chmlib/src
     $<TARGET_PROPERTY:crengine::crengine,INTERFACE_INCLUDE_DIRECTORIES>
