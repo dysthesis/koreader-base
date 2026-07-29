@@ -1,3 +1,4 @@
 [submodule "kpvcrlib/crengine"]
 	path = thirdparty/kpvcrlib/crengine
-	url = https://github.com/koreader/crengine.git
+	url = https://github.com/dysthesis/crengine.git
+	branch = knuth-plass
